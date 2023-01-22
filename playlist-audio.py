@@ -5,7 +5,7 @@ import moviepy.editor as mp  # to convert the mp4 to wavv then mp3
 import re
 username = os.getlogin()
 playlist = Playlist(
-    "https://www.youtube.com/playlist?list=PLcT36g1Z9qTcB8Hiv6pShGWlxjwDi83GW")
+    "https://youtube.com/playlist?list=PLcT36g1Z9qTevM_Xzqf6VX6KnTAt7QcIH")
 playlist.video_urls
 for url in playlist:
     print(url)
