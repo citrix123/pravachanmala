@@ -7,4 +7,6 @@ Requirements
 
 How to run the script? 
 
+``` python
 python3 playlist-audio.py 
+```
