@@ -2,6 +2,8 @@ from pytube import YouTube
 from pytube import Playlist
 from concurrent.futures import ThreadPoolExecutor
 import os
+import re
+import moviepy.editor as mp  # to convert the mp4 to wavv then mp3
 
 class pravachans:
     def __init__(self, args):
@@ -26,6 +28,25 @@ class pravachans:
 
             for future in futures:
                 future.add_done_callback(self.progress_indicator)
+
+        print("")
+        print ("--- starting converting the videos ---")
+        print("")
+
+        with ThreadPoolExecutor(self.jobs) as executor:
+            futures = [executor.submit(self.start_converting, i) for i in os.listdir(self.savedir)]
+
+            for future in futures:
+                future.add_done_callback(self.progress_indicator)
+
+    def start_converting(self, file):
+        if re.search('mp4', file):
+            print("Converting : " + file)
+            mp4_path = os.path.join(self.savedir, file)
+            mp3_path = os.path.join(self.savedir, os.path.splitext(file)[0]+'.mp3')
+            new_file = mp.AudioFileClip(mp4_path)
+            new_file.write_audiofile(mp3_path)
+            os.remove(mp4_path)
 
     def start_task(self, url, count):
         print ("Downloading {} url = {} ".format(url, count))
